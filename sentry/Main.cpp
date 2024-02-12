@@ -16,13 +16,13 @@ namespace Main {
 	BOOL Devkit = FALSE;
 	DWORD LastTitleId = 0;
 	BOOL Terminating = FALSE;
-	PCHAR tempNames[] = { "CPU", "GPU", "eDRAM", "Mobo" };
-	FLOAT tempResults[SMC_TEMP_TYPE_COUNT] = { 0.0f };
-	FLOAT tempResultsCache[SMC_TEMP_TYPE_COUNT] = { 0.0f };
+	PCHAR tempNames[] ={ "CPU", "GPU", "eDRAM", "Mobo" };
+	FLOAT tempResults[SMC_TEMP_TYPE_COUNT] ={ 0.0f };
+	FLOAT tempResultsCache[SMC_TEMP_TYPE_COUNT] ={ 0.0f };
 
-	HRESULT GetSystemTemperatures(PFLOAT temperatureResult){
+	HRESULT GetSystemTemperatures(PFLOAT temperatureResult) {
 		// Return an invalid argument if we dont have a valid array
-		if(temperatureResult == nullptr)
+		if (temperatureResult == nullptr)
 			return E_INVALIDARG;
 
 		// Create some buffers to handle the input/output of our SMC calls
@@ -38,15 +38,15 @@ namespace Main {
 		HalSendSMCMessage((LPVOID)smcMessage, (LPVOID)smcResponse);
 
 		// Calculate our temperatures
-		for( unsigned int typeIdx = 0; typeIdx < SMC_TEMP_TYPE_COUNT; typeIdx++){
-			temperatureResult[typeIdx] = (FLOAT)((smcResponse[typeIdx * 2 + 1] | (smcResponse[typeIdx * 2 + 2] << 8 )) / 256.0f);
+		for (unsigned int typeIdx = 0; typeIdx < SMC_TEMP_TYPE_COUNT; typeIdx++) {
+			temperatureResult[typeIdx] = (FLOAT)((smcResponse[typeIdx * 2 + 1] | (smcResponse[typeIdx * 2 + 2] << 8)) / 256.0f);
 		}
 
 		// Return Successfully
 		return S_OK;
 	}
 
-	VOID TitleThread(){
+	VOID TitleThread() {
 		// blocking call
 		HRESULT ipResult = Tools::GetXboxInternalIP(xboxip);
 
@@ -55,14 +55,16 @@ namespace Main {
 			SentryMessage("IP: %i.%i.%i.%i", octets.s_b1, octets.s_b2, octets.s_b3, octets.s_b4).Send();
 		}
 
-		while (!Terminating){
+		while (!Terminating) {
 			DWORD titleId = XamGetCurrentTitleId();
-			if(titleId != NULL && LastTitleId != titleId){
+			if (LastTitleId != titleId) {
 				LastTitleId = titleId;
-				PLDR_DATA_TABLE_ENTRY moduleHandle = (PLDR_DATA_TABLE_ENTRY)GetModuleHandle(0);
-				SentryMessage("TitleID: %08x", titleId).Send();
+				if (titleId != NULL) {
+					PLDR_DATA_TABLE_ENTRY moduleHandle = (PLDR_DATA_TABLE_ENTRY)GetModuleHandle(0);
+					SentryMessage("TitleID: %08x", titleId).Send();
+				}
 			}
-			Sleep(500);
+			Sleep(60);
 		}
 	}
 
@@ -84,7 +86,7 @@ namespace Main {
 		}
 	}
 
-	VOID Init(){
+	VOID Init() {
 		Devkit =  *(DWORD*)0x8E038610 & 0x8000 ? FALSE : TRUE;
 		Tools::ThreadMe((LPTHREAD_START_ROUTINE)TitleThread, NULL);
 		Tools::ThreadMe((LPTHREAD_START_ROUTINE)TempThread, NULL);
@@ -92,12 +94,12 @@ namespace Main {
 	}
 }
 
-BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, LPVOID lpReserved){
-	if(dwReason == DLL_PROCESS_ATTACH) {
-		if(XamLoaderGetDvdTrayState() != DVD_TRAY_STATE_OPEN) {
+BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, LPVOID lpReserved) {
+	if (dwReason == DLL_PROCESS_ATTACH) {
+		if (XamLoaderGetDvdTrayState() != DVD_TRAY_STATE_OPEN) {
 			Tools::ThreadMe((LPTHREAD_START_ROUTINE)Main::Init, NULL);
 		}
-	} else if (dwReason == DLL_PROCESS_DETACH){
+	} else if (dwReason == DLL_PROCESS_DETACH) {
 		Main::Terminating = TRUE;
 		Sleep(2500);
 	}
