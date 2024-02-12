@@ -19,15 +19,15 @@ typedef enum {
 
 typedef int (*DLAUNCHGETNUMOPTS)(int* totalOpts);
 typedef int (*DLAUNCHGETOPTINFO)(int opt, PDWORD optType, PCHAR outStr, PDWORD currVal, PDWORD defValue, PDWORD optCategory);
-typedef BOOL (*DLAUNCHGETOPTVAL)(int opt, PDWORD val);
-typedef BOOL (*DLAUNCHSETOPTVAL)(int opt, PDWORD val);
-typedef BOOL (*DLAUNCHGETOPTVALBYNAME)(char* optName, PDWORD val);
-typedef BOOL (*DLAUNCHSETOPTVALBYNAME)(char* optName, PDWORD val);
-typedef VOID (*DLAUNCHFORCEINILOAD)(PCHAR path);
-typedef DWORD (*DLAUNCHSTARTSYSMODULE)(char* modPath);
-typedef VOID (*DLAUNCHSHUTDOWN)(VOID);
-typedef DWORD (*DLAUNCHGETDRIVELIST)(DWORD dev, PCHAR devDest, PCHAR mountName, PCHAR friendlyName);
-typedef DWORD (*DLAUNCHGETDRIVEINFO)(PDWORD maxIniDrives, PDWORD maxDevLen);
+typedef BOOL(*DLAUNCHGETOPTVAL)(int opt, PDWORD val);
+typedef BOOL(*DLAUNCHSETOPTVAL)(int opt, PDWORD val);
+typedef BOOL(*DLAUNCHGETOPTVALBYNAME)(char* optName, PDWORD val);
+typedef BOOL(*DLAUNCHSETOPTVALBYNAME)(char* optName, PDWORD val);
+typedef VOID(*DLAUNCHFORCEINILOAD)(PCHAR path);
+typedef DWORD(*DLAUNCHSTARTSYSMODULE)(char* modPath);
+typedef VOID(*DLAUNCHSHUTDOWN)(VOID);
+typedef DWORD(*DLAUNCHGETDRIVELIST)(DWORD dev, PCHAR devDest, PCHAR mountName, PCHAR friendlyName);
+typedef DWORD(*DLAUNCHGETDRIVEINFO)(PDWORD maxIniDrives, PDWORD maxDevLen);
 
 extern BOOL IsDevkit;
 
@@ -119,9 +119,7 @@ static HRESULT initializePluginLoadPath() {
 		if (FAILED(ret = mountPath(directory, link))) {
 			return ret;
 		}
-	}
-	else
-	{
+	} else {
 		if (IsDevkit) {
 			std::string link("\\System ? ? \\Stealthy:");
 			std::string directory("\\Device\\Harddisk0\\Partition1\\DEVKIT\\Stealthy\\");

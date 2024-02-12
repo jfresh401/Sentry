@@ -1,8 +1,9 @@
 #pragma once
 #include "stdafx.h"
 
-Xe PeekPoke {
-	typedef enum _PEEK_POKE_TYPE {
+namespace peekpoke {
+
+	enum PEEK_POKE_TYPE {
 		PEEK_BYTE  = 0,
 		PEEK_WORD  = 1,
 		PEEK_DWORD = 2,
@@ -14,7 +15,7 @@ Xe PeekPoke {
 		POKE_QWORD = 8,
 		POKE_BYTES = 9,
 		PEEK_SPR   = 10
-	} PEEK_POKE_TYPE;
+	};
 
 	HRESULT InitializeHvPeekPoke();
 
@@ -30,4 +31,5 @@ Xe PeekPoke {
 	HRESULT HvPokeQWORD(QWORD Address, QWORD Value);
 	HRESULT HvPokeBytes(QWORD Address, const void* Buffer, DWORD Size);
 	QWORD HvGetFuseLine(BYTE fuseIndex);
-}
+
+} // namespace peekpoke
