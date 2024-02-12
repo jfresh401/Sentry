@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Utilities.h"
 
 #pragma warning(push)
 #pragma warning(disable:4826)

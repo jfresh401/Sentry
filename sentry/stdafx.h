@@ -40,6 +40,4 @@
 #define skprintf(fmt, ...)              ((void)__noop)
 #endif
 
-#include "Utils/Utilities.h"
-
 //game specific
