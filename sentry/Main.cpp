@@ -69,15 +69,14 @@ namespace Main {
 	VOID TempThread() {
 		while (!Terminating) {
 			if (SUCCEEDED(GetSystemTemperatures(tempResults))) {
-				const float epsilon = 1.0f; // default threshold of 1 degree celsius; anything less is ignored (for instant reporting)
+				const float epsilon = 0.1f; // default threshold of 1 degree celsius; anything less is ignored
 				SentryMessage msg;
 				for (auto i = 0; i < SMC_TEMP_TYPE_COUNT; i++) {
-					// uncomment below for instant reporting of temps that changed since last poll (and decrease sleep to a few ms)
-					//if ((tempResults[i] - tempResultsCache[i]) <= epsilon && (tempResultsCache[i] - tempResults[i]) <= epsilon) continue;
-					//tempResultsCache[i] = tempResults[i];
+					if ((tempResults[i] - tempResultsCache[i]) < epsilon && (tempResultsCache[i] - tempResults[i]) < epsilon)
+						continue;
+					tempResultsCache[i] = tempResults[i];
 					msg.AppendLine("%s: %.1f", tempNames[i], tempResults[i]);
 				}
-				// Performance optimization: send all temps at once
 				if (!msg.IsEmpty())
 					msg.Send();
 			}
