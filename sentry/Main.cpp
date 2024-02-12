@@ -67,12 +67,12 @@ namespace Main {
 	VOID TempThread() {
 		while (!Terminating) {
 			if (SUCCEEDED(GetSystemTemperatures(tempResults))) {
+				const float epsilon = 1.0f; // default threshold of 1 degree celsius; anything less is ignored (for instant reporting)
 				for (auto i = 0; i < SMC_TEMP_TYPE_COUNT; i++) {
-					if (tempResults[i] != tempResultsCache[i]) {
-						// uncomment below for instant reporting of temps that changed since last poll
-						//tempResultsCache[i] = tempResults[i];
-						skprintf("%s: %.1f", tempNames[i], tempResults[i]);
-					}
+					// uncomment below for instant reporting of temps that changed since last poll (and decrease sleep to a few ms)
+					//if ((tempResults[i] - tempResultsCache[i]) <= epsilon && (tempResultsCache[i] - tempResults[i]) <= epsilon) continue;
+					//tempResultsCache[i] = tempResults[i];
+					skprintf("%s: %.1f", tempNames[i], tempResults[i]);
 				}
 			}
 			Sleep(5000);
