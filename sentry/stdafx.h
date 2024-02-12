@@ -26,6 +26,8 @@
 #include <cstdlib>
 #include <math.h>
 
+#include "Utils/StringUtils.h"
+
 #if SDPRINTF_ENABLED
 #define sdprintf_impl                   DbgPrint
 #define sdprintf(fmt, ...)              sdprintf_impl("[Sentry Dbg] " fmt "\n", __VA_ARGS__)

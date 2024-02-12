@@ -5,11 +5,17 @@
     <ClInclude Include="Utils\Utilities.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\StringUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Utils\Utilities.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\StringUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
