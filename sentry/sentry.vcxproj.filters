@@ -5,6 +5,7 @@
     <ClInclude Include="Utils\Utilities.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="SentryMessage.h" />
     <ClInclude Include="Utils\StringUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -15,6 +16,7 @@
     <ClCompile Include="Utils\Utilities.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="SentryMessage.cpp" />
     <ClCompile Include="Utils\StringUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
