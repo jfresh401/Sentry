@@ -10,11 +10,13 @@ namespace Main {
 		SMC_TEMP_TYPE_COUNT
 	} SMC_TEMPERATURE_TYPE;
 
+	in_addr xboxip;
 	BOOL Devkit = FALSE;
 	DWORD LastTitleId = 0;
 	BOOL Terminating = FALSE;
-	FLOAT tempResults[SMC_TEMP_TYPE_COUNT] = { 0.0f, 0.0f, 0.0f, 0.0f };
-	in_addr xboxip;
+	PCHAR tempNames[] = { "CPU", "GPU", "eDRAM", "Mobo" };
+	FLOAT tempResults[SMC_TEMP_TYPE_COUNT] = { 0.0f };
+	FLOAT tempResultsCache[SMC_TEMP_TYPE_COUNT] = { 0.0f };
 
 	HRESULT GetSystemTemperatures(PFLOAT temperatureResult){
 		// Return an invalid argument if we dont have a valid array
@@ -64,9 +66,13 @@ namespace Main {
 
 	VOID TempThread() {
 		while (!Terminating) {
-			HRESULT tempReturn = GetSystemTemperatures(tempResults);
-			if (tempReturn == S_OK) {
-				skprintf("GPU: %.1f\n[Sentry] CPU: %.1f\n[Sentry] eDRAM: %.1f\n[Sentry] Mobo: %.1f", tempResults[SMC_TEMP_TYPE_GPU], tempResults[SMC_TEMP_TYPE_CPU], tempResults[SMC_TEMP_TYPE_MEMORY], tempResults[SMC_TEMP_TYPE_CASE]);
+			if (SUCCEEDED(GetSystemTemperatures(tempResults))) {
+				for (auto i = 0; i < SMC_TEMP_TYPE_COUNT; i++) {
+					if (tempResults[i] != tempResultsCache[i]) {
+						tempResultsCache[i] = tempResults[i];
+						skprintf("%s: %.1f", tempNames[i], tempResults[i]);
+					}
+				}
 			}
 			Sleep(10);
 		}
