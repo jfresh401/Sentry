@@ -22,7 +22,8 @@ namespace Main {
 
 	HRESULT GetSystemTemperatures(PFLOAT temperatureResult){
 		// Return an invalid argument if we dont have a valid array
-		if(temperatureResult == NULL) return E_INVALIDARG;
+		if(temperatureResult == nullptr)
+			return E_INVALIDARG;
 
 		// Create some buffers to handle the input/output of our SMC calls
 		BYTE smcMessage[16];
@@ -33,7 +34,7 @@ namespace Main {
 		memset(smcResponse, 0, 16);
 
 		// Request our tempetures
-		smcMessage[0] = 0x7;		// Temperature Request
+		smcMessage[0] = smc_query_sensor;
 		HalSendSMCMessage((LPVOID)smcMessage, (LPVOID)smcResponse);
 
 		// Calculate our temperatures
@@ -51,7 +52,7 @@ namespace Main {
 
 		if (SUCCEEDED(ipResult)) {
 			auto octets = xboxip.S_un.S_un_b;
-			SentryMessage(strprintf("IP: %i.%i.%i.%i", octets.s_b1, octets.s_b2, octets.s_b3, octets.s_b4)).Send();
+			SentryMessage("IP: %i.%i.%i.%i", octets.s_b1, octets.s_b2, octets.s_b3, octets.s_b4).Send();
 		}
 
 		while (!Terminating){
@@ -59,7 +60,7 @@ namespace Main {
 			if(titleId != NULL && LastTitleId != titleId){
 				LastTitleId = titleId;
 				PLDR_DATA_TABLE_ENTRY moduleHandle = (PLDR_DATA_TABLE_ENTRY)GetModuleHandle(0);
-				SentryMessage(strprintf("TitleID: %08x", titleId)).Send();
+				SentryMessage("TitleID: %08x", titleId).Send();
 			}
 			Sleep(500);
 		}
@@ -69,12 +70,16 @@ namespace Main {
 		while (!Terminating) {
 			if (SUCCEEDED(GetSystemTemperatures(tempResults))) {
 				const float epsilon = 1.0f; // default threshold of 1 degree celsius; anything less is ignored (for instant reporting)
+				SentryMessage msg;
 				for (auto i = 0; i < SMC_TEMP_TYPE_COUNT; i++) {
 					// uncomment below for instant reporting of temps that changed since last poll (and decrease sleep to a few ms)
 					//if ((tempResults[i] - tempResultsCache[i]) <= epsilon && (tempResultsCache[i] - tempResults[i]) <= epsilon) continue;
 					//tempResultsCache[i] = tempResults[i];
-					SentryMessage(strprintf("%s: %.1f", tempNames[i], tempResults[i])).Send();
+					msg.AppendLine("%s: %.1f", tempNames[i], tempResults[i]);
 				}
+				// Performance optimization: send all temps at once
+				if (!msg.IsEmpty())
+					msg.Send();
 			}
 			Sleep(5000);
 		}
