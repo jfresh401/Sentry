@@ -69,12 +69,13 @@ namespace Main {
 			if (SUCCEEDED(GetSystemTemperatures(tempResults))) {
 				for (auto i = 0; i < SMC_TEMP_TYPE_COUNT; i++) {
 					if (tempResults[i] != tempResultsCache[i]) {
-						tempResultsCache[i] = tempResults[i];
+						// uncomment below for instant reporting of temps that changed since last poll
+						//tempResultsCache[i] = tempResults[i];
 						skprintf("%s: %.1f", tempNames[i], tempResults[i]);
 					}
 				}
 			}
-			Sleep(10);
+			Sleep(5000);
 		}
 	}
 
