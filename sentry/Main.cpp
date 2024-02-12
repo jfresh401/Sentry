@@ -21,6 +21,7 @@ namespace sentry {
 		}
 
 		static DWORD titleIdCache = 0;
+
 		while (!g_terminating) {
 			DWORD titleId = XamGetCurrentTitleId();
 			if (titleIdCache != titleId) {
@@ -30,32 +31,48 @@ namespace sentry {
 					SentryMessage("TitleID: %08x", titleId).Send();
 				}
 			}
+
 			Sleep(60);
 		}
 	}
 
 	VOID TempsThread() {
+		const DWORD delay = 5000;
+		static DWORD lastRun = 0;
+
 		while (!g_terminating) {
-			if (SUCCEEDED(GetSystemTemperatures(g_tempValues))) {
-				const float epsilon = 0.1f; // default threshold of 1 degree celsius; anything less is ignored
-				SentryMessage msg;
-				for (auto i = 0; i < SMC_TEMP_TYPE_COUNT; i++) {
-					if ((g_tempValues[i] - g_tempValuesCache[i]) < epsilon && (g_tempValuesCache[i] - g_tempValues[i]) < epsilon)
-						continue;
-					g_tempValuesCache[i] = g_tempValues[i];
-					msg.AppendLine("%s: %.1f", g_tempNames[i], g_tempValues[i]);
-				}
-				if (!msg.IsEmpty())
-					msg.Send();
+			DWORD now = GetTickCount();
+			if (lastRun + delay > now) {
+				Sleep(60);
+				continue;
 			}
-			Sleep(5000);
+
+			lastRun = now;
+
+			if (FAILED(GetSystemTemperatures(g_tempValues)))
+				continue;
+
+			SentryMessage msg;
+			const float epsilon = 0.1f; // tolerance threshold of 0.1C; anything less is ignored
+
+			for (auto i = 0; i < SMC_TEMP_TYPE_COUNT; i++) {
+				if (utils::EqualWithTolerance(g_tempValues[i], g_tempValuesCache[i], epsilon))
+					continue;
+
+				g_tempValuesCache[i] = g_tempValues[i];
+				msg.AppendLine("%s: %.1f", g_tempNames[i], g_tempValues[i]);
+			}
+
+			if (!msg.IsEmpty())
+				msg.Send();
 		}
 	}
+
 	VOID Init() {
 		g_isDevkit =  *(DWORD*)0x8E038610 & 0x8000 ? FALSE : TRUE;
 		utils::ThreadMe((LPTHREAD_START_ROUTINE)TitleThread, NULL);
 		utils::ThreadMe((LPTHREAD_START_ROUTINE)TempsThread, NULL);
-		SentryMessage().AppendLine().Append("Sentry started!").Send();
+		SentryMessage().AppendLine().AppendLine("Sentry started!").Send();
 	}
 } // namespace sentry
 
