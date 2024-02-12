@@ -47,7 +47,7 @@ namespace Main {
 
 		if (SUCCEEDED(ipResult)) {
 			auto octets = xboxip.S_un.S_un_b;
-			printf("[Sentry] IP: %i.%i.%i.%i", octets.s_b1, octets.s_b2, octets.s_b3, octets.s_b4);
+			skprintf("IP: %i.%i.%i.%i", octets.s_b1, octets.s_b2, octets.s_b3, octets.s_b4);
 		}
 
 		while (!Terminating){
@@ -55,8 +55,8 @@ namespace Main {
 			if(LastTitleId != titleId){
 				LastTitleId = titleId;
 				PLDR_DATA_TABLE_ENTRY moduleHandle = (PLDR_DATA_TABLE_ENTRY)GetModuleHandle(0);
-				printf("[Sentry] TitleID: %08x\n", titleId);
-				//printf("[Sentry] ModuleHandle: %ls\n", moduleHandle->BaseDllName.Buffer);
+				skprintf("TitleID: %08x", titleId);
+				//skprintf("ModuleName: %ls", moduleHandle->BaseDllName.Buffer); // crashes on title change; reimplement or remove
 			}
 			Sleep(500);
 		}
@@ -66,7 +66,7 @@ namespace Main {
 		while (!Terminating) {
 			HRESULT tempReturn = GetSystemTemperatures(tempResults);
 			if (tempReturn == S_OK) {
-				printf("[Sentry] GPU: %.1f\n[Sentry] CPU: %.1f\n[Sentry] eDRAM: %.1f\n[Sentry] Mobo: %.1f\n", tempResults[SMC_TEMP_TYPE_GPU], tempResults[SMC_TEMP_TYPE_CPU], tempResults[SMC_TEMP_TYPE_MEMORY], tempResults[SMC_TEMP_TYPE_CASE]);
+				skprintf("GPU: %.1f\n[Sentry] CPU: %.1f\n[Sentry] eDRAM: %.1f\n[Sentry] Mobo: %.1f", tempResults[SMC_TEMP_TYPE_GPU], tempResults[SMC_TEMP_TYPE_CPU], tempResults[SMC_TEMP_TYPE_MEMORY], tempResults[SMC_TEMP_TYPE_CASE]);
 			}
 			Sleep(10);
 		}
@@ -76,7 +76,8 @@ namespace Main {
 		Devkit =  *(DWORD*)0x8E038610 & 0x8000 ? FALSE : TRUE;
 		Tools::ThreadMe((LPTHREAD_START_ROUTINE)TitleThread, NULL);
 		Tools::ThreadMe((LPTHREAD_START_ROUTINE)TempThread, NULL);
-		printf("\nSentry started!\n");
+		skprintf("");
+		skprintf("Sentry started!");
 	}
 }
 
@@ -88,6 +89,6 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, LPVOID lpReserved){
 	} else if (dwReason == DLL_PROCESS_DETACH){
 		Main::Terminating = TRUE;
 		Sleep(2500);
-	}	
+	}
 	return TRUE;
 }

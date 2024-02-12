@@ -13,7 +13,7 @@ namespace Tools {
 		SetThreadPriority(handle, THREAD_PRIORITY_ABOVE_NORMAL);
 		ResumeThread(handle);
 	}
-	
+
 	VOID XNotifyUI(char* Type, PWCHAR pwszStringParam) {
 		XNOTIFYQUEUEUI_TYPE eType;
 		if (strcmp(Type, "happy") == 0)       eType = XNOTIFYUI_TYPE_PREFERRED_REVIEW;
@@ -42,7 +42,7 @@ namespace Tools {
 
 		DWORD ethernet_status = XNetGetEthernetLinkStatus();
 		if (!ethernet_status) {
-			printf("[SENTRY] Ethernet unplugged...");
+			sdprintf("[SENTRY] Ethernet unplugged...");
 			while (!(ethernet_status = XNetGetEthernetLinkStatus())) {
 				if (GetTickCount() > timeout)
 					return E_FAIL;
