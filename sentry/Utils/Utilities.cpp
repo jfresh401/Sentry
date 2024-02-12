@@ -42,7 +42,7 @@ namespace Tools {
 
 		DWORD ethernet_status = XNetGetEthernetLinkStatus();
 		if (!ethernet_status) {
-			sdprintf("[SENTRY] Ethernet unplugged...");
+			sdprintf("Ethernet unplugged...");
 			while (!(ethernet_status = XNetGetEthernetLinkStatus())) {
 				if (GetTickCount() > timeout)
 					return E_FAIL;
