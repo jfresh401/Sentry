@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include "Utils/Utilities.h"
+#include "SentryMessage.h"
 
 namespace Main {
 
@@ -49,7 +51,7 @@ namespace Main {
 
 		if (SUCCEEDED(ipResult)) {
 			auto octets = xboxip.S_un.S_un_b;
-			skprintf("IP: %i.%i.%i.%i", octets.s_b1, octets.s_b2, octets.s_b3, octets.s_b4);
+			SentryMessage(strprintf("IP: %i.%i.%i.%i", octets.s_b1, octets.s_b2, octets.s_b3, octets.s_b4)).Send();
 		}
 
 		while (!Terminating){
@@ -57,8 +59,7 @@ namespace Main {
 			if(titleId != NULL && LastTitleId != titleId){
 				LastTitleId = titleId;
 				PLDR_DATA_TABLE_ENTRY moduleHandle = (PLDR_DATA_TABLE_ENTRY)GetModuleHandle(0);
-				skprintf("TitleID: %08x", titleId);
-				//skprintf("ModuleName: %ls", moduleHandle->BaseDllName.Buffer); // crashes on title change; reimplement or remove
+				SentryMessage(strprintf("TitleID: %08x", titleId)).Send();
 			}
 			Sleep(500);
 		}
@@ -72,7 +73,7 @@ namespace Main {
 					// uncomment below for instant reporting of temps that changed since last poll (and decrease sleep to a few ms)
 					//if ((tempResults[i] - tempResultsCache[i]) <= epsilon && (tempResultsCache[i] - tempResults[i]) <= epsilon) continue;
 					//tempResultsCache[i] = tempResults[i];
-					skprintf("%s: %.1f", tempNames[i], tempResults[i]);
+					SentryMessage(strprintf("%s: %.1f", tempNames[i], tempResults[i])).Send();
 				}
 			}
 			Sleep(5000);
@@ -83,8 +84,7 @@ namespace Main {
 		Devkit =  *(DWORD*)0x8E038610 & 0x8000 ? FALSE : TRUE;
 		Tools::ThreadMe((LPTHREAD_START_ROUTINE)TitleThread, NULL);
 		Tools::ThreadMe((LPTHREAD_START_ROUTINE)TempThread, NULL);
-		skprintf("");
-		skprintf("Sentry started!");
+		SentryMessage("\nSentry started!").Send();
 	}
 }
 
