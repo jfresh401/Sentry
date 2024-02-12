@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 
 std::string  strprintf(_In_z_ _Printf_format_string_ const char* fmt, ...);
 std::string  vstrprintf(_In_z_ _Printf_format_string_ const char* fmt, va_list va);

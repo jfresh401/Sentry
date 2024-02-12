@@ -3,29 +3,31 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Utils\Utilities.h">
-      <Filter>Utils</Filter>
+      <Filter>Utilitiies</Filter>
     </ClInclude>
     <ClInclude Include="SentryMessage.h" />
     <ClInclude Include="Utils\StringUtils.h">
-      <Filter>Utils</Filter>
+      <Filter>Utilitiies</Filter>
     </ClInclude>
+    <ClInclude Include="XboxHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Utils\Utilities.cpp">
-      <Filter>Utils</Filter>
+      <Filter>Utilitiies</Filter>
     </ClCompile>
     <ClCompile Include="SentryMessage.cpp" />
     <ClCompile Include="Utils\StringUtils.cpp">
-      <Filter>Utils</Filter>
+      <Filter>Utilitiies</Filter>
     </ClCompile>
+    <ClCompile Include="XboxHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="sentry.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Utils">
+    <Filter Include="Utilitiies">
       <UniqueIdentifier>{b0ff90d2-dce2-4dca-ab6b-075fac31a0ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

@@ -1,35 +1,39 @@
 #pragma once
 
-class SentryMessage {
-public:
-	std::string Text;
+namespace sentry {
 
-	SentryMessage() { }
-	SentryMessage(const char* fmt, ...);
-	SentryMessage(const std::string& str) : Text(str) { }
+	class SentryMessage {
+	public:
+		std::string Text;
 
-	~SentryMessage() { }
+		SentryMessage() { }
+		SentryMessage(const char* fmt, ...);
+		SentryMessage(const std::string& str) : Text(str) { }
 
-	SentryMessage& Append(const char* fmt, ...);
-	SentryMessage& Append(const std::string& str) { Text += str; return *this; }
+		~SentryMessage() { }
 
-	SentryMessage& AppendLine() { Text += "\n"; }
-	SentryMessage& AppendLine(const char* fmt, ...);
-	SentryMessage& AppendLine(const std::string& str) { Text += str + "\n"; return *this; }
+		SentryMessage& Append(const char* fmt, ...);
+		SentryMessage& Append(const std::string& str) { Text += str; return *this; }
 
-	bool IsEmpty() const { return Text.empty(); }
+		SentryMessage& AppendLine() { Text += "\n"; return *this; }
+		SentryMessage& AppendLine(const char* fmt, ...);
+		SentryMessage& AppendLine(const std::string& str) { Text += str + "\n"; return *this; }
 
-	void Send() { sendInternal(); }
+		bool IsEmpty() const { return Text.empty(); }
 
-protected:
-	void sendInternal() {
-		if (Text.length() > 0 && Text[Text.length() - 1] != '\n')
-			Text += "\n";
-		sendToDbgPrint(Text);
-	}
+		void Send() { sendInternal(); }
 
-private:
-	void sendToDbgPrint(const std::string& text) {
-		DbgPrint("[Sentry] %s", text.c_str());
-	}
-};
+	protected:
+		void sendInternal() {
+			if (Text.length() > 0 && Text[Text.length() - 1] != '\n')
+				Text += "\n";
+			sendToDbgPrint(Text);
+		}
+
+	private:
+		void sendToDbgPrint(const std::string& text) {
+			DbgPrint("[Sentry] %s", text.c_str());
+		}
+	};
+
+} // namespace sentry
