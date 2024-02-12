@@ -54,7 +54,7 @@ namespace Main {
 
 		while (!Terminating){
 			DWORD titleId = XamGetCurrentTitleId();
-			if(LastTitleId != titleId){
+			if(titleId != NULL && LastTitleId != titleId){
 				LastTitleId = titleId;
 				PLDR_DATA_TABLE_ENTRY moduleHandle = (PLDR_DATA_TABLE_ENTRY)GetModuleHandle(0);
 				skprintf("TitleID: %08x", titleId);
