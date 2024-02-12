@@ -28,14 +28,14 @@
 
 #if SDPRINTF_ENABLED
 #define sdprintf_impl                   DbgPrint
-#define sdprintf(fmt, ...)              sdprintf_impl("[Sentry Dbg]" fmt "\n", __VA_ARGS__)
+#define sdprintf(fmt, ...)              sdprintf_impl("[Sentry Dbg] " fmt "\n", __VA_ARGS__)
 #else
 #define sdprintf(fmt, ...)              ((void)__noop)
 #endif
 
 #if SKPRINTF_ENABLED
 #define skprintf_impl                   DbgPrint
-#define skprintf(fmt, ...)              skprintf_impl("[Sentry]" fmt "\n", __VA_ARGS__)
+#define skprintf(fmt, ...)              skprintf_impl("[Sentry] " fmt "\n", __VA_ARGS__)
 #else
 #define skprintf(fmt, ...)              ((void)__noop)
 #endif
