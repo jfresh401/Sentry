@@ -11,5 +11,6 @@ namespace sentry {
 	};
 
 	HRESULT GetSystemTemperatures(PFLOAT temperatureResult);
+	HRESULT GetXboxInternalIP(in_addr& xboxAddress, int timeoutMs = 10000);
 
 } // namespace sentry

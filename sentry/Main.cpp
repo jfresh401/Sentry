@@ -15,7 +15,7 @@ namespace sentry {
 	FLOAT g_tempValuesCache[SMC_TEMP_TYPE_COUNT] ={ 0.0f };
 
 	VOID TitleThread() {
-		if (SUCCEEDED(utils::GetXboxInternalIP(g_xboxIP))) {
+		if (SUCCEEDED(GetXboxInternalIP(g_xboxIP))) {
 			auto octets = g_xboxIP.S_un.S_un_b;
 			SentryMessage("IP: %i.%i.%i.%i", octets.s_b1, octets.s_b2, octets.s_b3, octets.s_b4).Send();
 		}
