@@ -14,6 +14,7 @@ namespace Main {
 	DWORD LastTitleId = 0;
 	BOOL Terminating = FALSE;
 	FLOAT tempResults[SMC_TEMP_TYPE_COUNT] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	in_addr xboxip;
 
 	HRESULT GetSystemTemperatures(PFLOAT temperatureResult){
 		// Return an invalid argument if we dont have a valid array
@@ -41,6 +42,14 @@ namespace Main {
 	}
 
 	VOID TitleThread(){
+		// blocking call
+		HRESULT ipResult = Tools::GetXboxInternalIP(xboxip);
+
+		if (SUCCEEDED(ipResult)) {
+			auto octets = xboxip.S_un.S_un_b;
+			printf("[Sentry] IP: %i.%i.%i.%i", octets.s_b1, octets.s_b2, octets.s_b3, octets.s_b4);
+		}
+
 		while (!Terminating){
 			DWORD titleId = XamGetCurrentTitleId();
 			if(LastTitleId != titleId){
@@ -59,16 +68,15 @@ namespace Main {
 			if (tempReturn == S_OK) {
 				printf("[Sentry] GPU: %.1f\n[Sentry] CPU: %.1f\n[Sentry] eDRAM: %.1f\n[Sentry] Mobo: %.1f\n", tempResults[SMC_TEMP_TYPE_GPU], tempResults[SMC_TEMP_TYPE_CPU], tempResults[SMC_TEMP_TYPE_MEMORY], tempResults[SMC_TEMP_TYPE_CASE]);
 			}
-			Sleep(5000);
+			Sleep(10);
 		}
 	}
 
 	VOID Init(){
 		Devkit =  *(DWORD*)0x8E038610 & 0x8000 ? FALSE : TRUE;
-		Sleep(10000);
-		printf("\nSentry started!\n");
 		Tools::ThreadMe((LPTHREAD_START_ROUTINE)TitleThread, NULL);
 		Tools::ThreadMe((LPTHREAD_START_ROUTINE)TempThread, NULL);
+		printf("\nSentry started!\n");
 	}
 }
 
