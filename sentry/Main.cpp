@@ -56,7 +56,7 @@ namespace Main {
 				LastTitleId = titleId;
 				PLDR_DATA_TABLE_ENTRY moduleHandle = (PLDR_DATA_TABLE_ENTRY)GetModuleHandle(0);
 				printf("[Sentry] TitleID: %08x\n", titleId);
-				printf("[Sentry] ModuleHandle: %ls\n", moduleHandle->BaseDllName.Buffer);
+				//printf("[Sentry] ModuleHandle: %ls\n", moduleHandle->BaseDllName.Buffer);
 			}
 			Sleep(500);
 		}
