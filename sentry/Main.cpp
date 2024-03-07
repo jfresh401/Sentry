@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#include "Utils/Utilities.h"
-#include "SentryMessage.h"
-#include "XboxHelpers.h"
 
 namespace sentry {
 	BOOL g_isDevkit = FALSE;
@@ -23,15 +20,20 @@ namespace sentry {
 		static DWORD titleIdCache = 0;
 
 		while (!g_terminating) {
-			DWORD titleId = XamGetCurrentTitleId();
-			if (titleIdCache != titleId) {
-				titleIdCache = titleId;
-				if (titleId != NULL) {
-					PLDR_DATA_TABLE_ENTRY moduleHandle = (PLDR_DATA_TABLE_ENTRY)GetModuleHandle(NULL);
-					SentryMessage("TitleID: %08X", titleId).Send(); // [Sentry] TitleID: FFFE07D1
+			//DWORD titleId = XamGetCurrentTitleId();
+			PLDR_DATA_TABLE_ENTRY Table = (PLDR_DATA_TABLE_ENTRY)GetModuleHandle(0);
+			if (Table) {
+				PXEX_EXECUTION_ID pExecutionId = (PXEX_EXECUTION_ID)RtlImageXexHeaderField(Table->XexHeaderBase, 0x00040006);
+				if (pExecutionId) {
+					DWORD titleId = pExecutionId->TitleID;
+					if (titleIdCache != titleId) {
+						titleIdCache = titleId;
+						if (titleId != NULL) {
+							SentryMessage("TitleID: %08X", titleId).Send(); // [Sentry] TitleID: FFFE07D1
+						}
+					}
 				}
 			}
-
 			Sleep(60);
 		}
 	}

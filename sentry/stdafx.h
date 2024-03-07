@@ -26,6 +26,9 @@
 #include <math.h>
 
 #include "Utils/StringUtils.h"
+#include "Utils/Utilities.h"
+#include "SentryMessage.h"
+#include "XboxHelpers.h"
 
 #if SKPRINTF_ENABLED
 #define sdprintf_impl                   DbgPrint

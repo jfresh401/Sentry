@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "Utilities.h"
 
 // TODO: wtf?
 #pragma warning(push)
