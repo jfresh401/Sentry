@@ -13,6 +13,8 @@
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
+//Using a 2.42" OLED SSD1309 screen with the SSD1306 lbr
+
 const char* ssid = "YOUR SSID HERE";
 const char* password = "YOUR PASSWORD HERE";
 
