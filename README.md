@@ -25,5 +25,5 @@ I eventually lost interest and shelved the project, but this should make for a g
 ## Simple Search Parts List
 
 - **OLED Display**: 2.42" 128x64 SSD1309 OLED Display
-- **ESP32**: ESP-WROOM-32 Dev Board
+- **ESP32-­WROOM-­32**: ESP-WROOM-32 Dev Board
 - **SD Module**: Arduino compatible Micro SD card module
