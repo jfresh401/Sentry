@@ -22,7 +22,7 @@ I eventually lost interest and shelved the project, but this should make for a g
   <img src="https://img.youtube.com/vi/jQ3l50-DQSE/maxresdefault.jpg" alt="Sentry Demo" width="550">
 </a>
 
-## Simple Search Parts List
+## Simple Parts Search List
 
 - **OLED Display**: 2.42" 128x64 SSD1309 OLED Display
 - **ESP32-­WROOM-­32**: ESP-WROOM-32 Dev Board
