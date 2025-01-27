@@ -22,8 +22,12 @@ I eventually lost interest and shelved the project, but this should make for a g
   <img src="https://img.youtube.com/vi/jQ3l50-DQSE/maxresdefault.jpg" alt="Sentry Demo" width="550">
 </a>
 
-## Simple Parts Search List
+## Parts Search List
 
 - **OLED Display**: 2.42" 128x64 SSD1309 OLED Display
 - **ESP32-­WROOM-­32**: ESP-WROOM-32 Dev Board
 - **SD Module**: Arduino compatible Micro SD card module
+
+## Simple Wiring Diagram
+
+<img src="diagram.jpg" alt="Simple Wiring Diagram" width="600">
