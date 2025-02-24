@@ -36,6 +36,6 @@ I eventually lost interest and shelved the project, but this should make for a g
 - **ESP32-­WROOM-­32**: ESP-WROOM-32 Dev Board
 - **SD Module**: Arduino compatible Micro SD card module
 
-## Simple Wiring Diagram
+## Simple Wiring Diagram -- UPDATED
 
 <img src="diagram.jpg" alt="Simple Wiring Diagram" width="600">
