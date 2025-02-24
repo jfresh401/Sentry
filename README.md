@@ -1,4 +1,5 @@
 ADDED 2/24/2025: SentrySync2.ino works with wifi. Updated diagram.
+Thanks to ViolentLambs for helping out with this.
 
 # Sentry
 Sentry is a project I started as a fun experiment to bring a status screen to the Xbox 360, inspired by the old LCD mods for the original Xbox. Currently, the project is unfinished however, it does have a handful of features in its current state, including:  
