@@ -1,5 +1,10 @@
 ADDED 2/24/2025: SentrySync2.ino works with wifi. Updated diagram.
-Thanks to ViolentLambs for helping out with this.
+Thanks to ViolentLambs and Charly Gaber for helping out with this. Check out Charly's Fiver account. He does great work! 
+<a href="https://www.fiverr.com/s/1qQEpKK">
+  <img src="https://fiverr-res.cloudinary.com/image/upload/t_profile_original,q_auto,f_auto/v1/attachments/profile/photo/0323440bab463480b32e71ade68b04b2-1592510537305/4fe5d3b5-2571-4984-bfbb-85d00684d409.jpg" alt="Charly's Fiver Profile" width="200">
+</a>
+
+
 
 # Sentry
 Sentry is a project I started as a fun experiment to bring a status screen to the Xbox 360, inspired by the old LCD mods for the original Xbox. Currently, the project is unfinished however, it does have a handful of features in its current state, including:  
