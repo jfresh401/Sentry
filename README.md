@@ -1,7 +1,7 @@
 ADDED 2/24/2025: SentrySync2.ino works with wifi. Updated diagram.
 Thanks to ViolentLambs and Charly Gaber for helping out with this. Check out Charly's Fiver account. He does great work! 
 <a href="https://www.fiverr.com/s/1qQEpKK">
-  <img src="https://mms.businesswire.com/media/20190711005205/en/732296/2/FIV_Logo_Green-Circle.jpg" alt="Charly's Fiver Profile" width="200">
+  <img src="https://mms.businesswire.com/media/20190711005205/en/732296/5/FIV_Logo_Green-Circle.jpg?download=1&_gl=1*xlfouw*_gcl_au*NDY3MTMzMDY4LjE3NDA0MDgxNzM.*_ga*MjA3NTI1NzA3OS4xNzQwNDA4MTcz*_ga_ZQWF70T3FK*MTc0MDQwODE3Mi4xLjAuMTc0MDQwODE3My41OS4wLjA." alt="Charly's Fiver Profile" width="200">
 </a>
 
 
