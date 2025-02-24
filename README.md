@@ -1,3 +1,5 @@
+ADDED 2/24/2025: SentrySync2.ino works with wifi. Updated diagram.
+
 # Sentry
 Sentry is a project I started as a fun experiment to bring a status screen to the Xbox 360, inspired by the old LCD mods for the original Xbox. Currently, the project is unfinished however, it does have a handful of features in its current state, including:  
 
@@ -24,7 +26,7 @@ I eventually lost interest and shelved the project, but this should make for a g
 
 ## Parts Search List
 
-- **OLED Display**: 2.42" 128x64 SSD1309 OLED Display
+- **OLED Display**: 2.42" 128x64 SSD1309 OLED Display  (any i2c OLED should work, refer to wiring)
 - **ESP32-­WROOM-­32**: ESP-WROOM-32 Dev Board
 - **SD Module**: Arduino compatible Micro SD card module
 
