@@ -1,5 +1,5 @@
 ADDED 2/24/2025: SentrySync2.ino and SentrySync3.ino work with wifi. 
-SentrySync3.ino adds Over-The-Air update capabilities.
+SentrySync3.ino adds Over-The-Air update capabilities for uploading a sketch to ESP32 wirelessly.
 Updated diagram.
 Thanks to ViolentLambs and Charly Gaber for helping out with this. Check out Charly's Fiver account. He does great work! 
 <a href="https://www.fiverr.com/s/1qQEpKK">
