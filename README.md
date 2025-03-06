@@ -41,3 +41,7 @@ I eventually lost interest and shelved the project, but this should make for a g
 ## Simple Wiring Diagram -- UPDATED
 
 <img src="diagram.jpg" alt="Simple Wiring Diagram" width="600">
+
+## SentrySync - Full Color
+
+<img src="Sentry Sync/SentrySync - Full Color/Sentry_Full_Color.jpg" alt="SentrySync - Full Color Wiring Diagram" width="1000">
