@@ -1,3 +1,5 @@
+ADDED 3/6/2025: SentrySync is now in Full Color! New files and diagram added.
+
 ADDED 2/24/2025: SentrySync2.ino and SentrySync3.ino work with wifi. 
 SentrySync3.ino adds Over-The-Air update capabilities for uploading a sketch to ESP32 wirelessly.
 Updated diagram.
