@@ -263,21 +263,25 @@ void setup() {
   tft.fillScreen(ST7735_BLACK);
 
   // Continue with the rest of the setup
-  tft.setTextSize(1); // Set text size
-  tft.setTextColor(ST7735_YELLOW); // Set text color
-  tft.setCursor(20, 5); // Set cursor position
+  
   
   // Initialize SD card
   if (!SD.begin()) {
     Serial.println("SD Mount Failed");
+    tft.setTextSize(1); // Set text size
+    tft.setTextColor(ST7735_YELLOW); // Set text color
+    tft.setCursor(20, 5); // Set cursor position
     tft.println("  SD Card Not Found!");
     
     tft.drawBitmap(15, 8, epd_bitmap_question, 128, 64, CoolBlue); // SD Card Image
     
     delay(5000); // Wait for 5 seconds
-    tft.fillScreen(ST7735_BLACK);
-    drawBackground();
+    return;
+    
   }
+  drawBackground();
+  delay(5000);
+  tft.fillScreen(ST7735_BLACK);
   ArduinoOTA.begin();
   Serial.println("OTA started");
 }
@@ -308,7 +312,7 @@ void addLineUart(String line) {
   lines_screen[lineCountScreen++] = line;
   
   // Clear the display
-  tft.fillScreen(ST7735_BLACK);
+  //tft.fillScreen(ST7735_BLACK);
   tft.setTextSize(1);
   tft.setTextColor(ST7735_WHITE);
   tft.setCursor(0, 10);
@@ -391,6 +395,7 @@ void loop() {
 void updateOLED() {
   
   // Display sensor data on OLED
+  
   //tft.fillScreen(ST7735_BLACK);
   tft.setTextSize(2);
   
@@ -442,14 +447,16 @@ void processDefaultModeData(String data) {
     if (ipAddress != "0.0.0.0") {
       // Display IP address on OLED screen
       tft.fillScreen(ST7735_BLACK);
-      tft.setTextSize(2);
-      tft.setTextColor(ST7735_RED);
-      tft.setCursor(0, 5);
+      tft.setTextSize(1);
+      tft.setTextColor(ST7735_YELLOW);
+      tft.setCursor(0, 10);
       tft.println("IP Address Acquired:");
       tft.println(ipAddress);
       
 
       delay(5000); // Display for 5 seconds
+      drawBackground();
+      delay(2000);
       updateOLED(); // Switch back to displaying temperature readings
     }
   }
@@ -611,8 +618,9 @@ void displayInfoFromSD(String targetTitleID) {
       tft.println(developer);
       
 
-      delay(10000); // Display for 10 seconds
+      delay(8000); // Display for 10 seconds
       drawBackground();
+      delay(3000);
       updateOLED(); // Switch back to displaying temperature readings
       
       file.close();
