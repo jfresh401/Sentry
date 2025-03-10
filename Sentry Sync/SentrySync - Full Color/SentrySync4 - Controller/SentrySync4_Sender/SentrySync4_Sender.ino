@@ -25,8 +25,8 @@ typedef struct struct_message {
   bool tidSent;
   char gameTitle[32];
   char developer[32];
-  char tTitleID[10];
-  char xboxipAdd[12];
+  char tTitleID[32];
+  char xboxipAdd[32];
 } struct_message;
 
 // Create a struct_message called myData
@@ -407,7 +407,7 @@ void displayInfoFromSD(String targetTitleID) {
 
       targetTitleID.toUpperCase(); // Converts title id to uppercase
       strcpy(myData.tTitleID, targetTitleID.c_str()); 
-      myData.tidSent == true;
+      myData.tidSent = true;
       
       file.close();
       return; // Stop searching after finding the first match
