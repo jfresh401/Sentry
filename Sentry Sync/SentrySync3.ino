@@ -23,8 +23,8 @@ IPAddress Built_Mask(255, 255, 255, 0);
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 
-const char* ssid = "Smiths";
-const char* password = "capitol401";
+const char* ssid = "your network";
+const char* password = "your password";
 
 WebServer server(80);
 
