@@ -44,8 +44,8 @@ esp_now_peer_info_t peerInfo;
 
 
 
-const char* ssid = "Smiths";
-const char* password = "capitol401";
+const char* ssid = "YOUR NETWORK NAME";
+const char* password = "YOUR PASSWORD";
 
 WebServer server(80);
 
