@@ -24,7 +24,7 @@
 
 #define UART_BAUD_RATE 115200
 
-//Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
+
 TFT_eSPI tft = TFT_eSPI();
 
 const char* ssid = "Smiths";
@@ -56,12 +56,22 @@ String gameTitle;
 String titleID;
 String developer;
 String ipAddress;
+String lastID = "";
 
 unsigned long previousMillis = 0;
 const long interval = 2000; // Interval to update OLED display (milliseconds)
 
-uint16_t XBGreen = tft.color565(48, 160, 0);  // Xbox green
-uint16_t CoolBlue = tft.color565(24, 89, 124);  // SD card blue
+//Colors------------------------------------------
+uint16_t XBGreen = tft.color565(0, 160, 48);  // Xbox green
+uint16_t xYellow = tft.color565(0, 255, 255);  
+uint16_t CoolBlue = tft.color565(124, 89, 24);  // SD card blue
+uint16_t xRed = tft.color565(0, 0, 255);
+uint16_t xPurple = tft.color565(255, 0, 100);
+uint16_t xBlue = tft.color565(255, 0, 0);
+uint16_t xOrange = tft.color565(0, 100, 255);
+uint16_t xPink = tft.color565(255, 0, 255);
+uint16_t xGray = tft.color565(100, 100, 100);
+
 
 // 'sentrysplash', 128x64px
 const unsigned char epd_bitmap_sentrysplash [] PROGMEM = {
@@ -226,8 +236,8 @@ typedef struct struct_message {
   bool tidSent;
   char gameTitle[32];
   char developer[32];
-  char tTitleID[10];
-  char xboxipAdd[12];
+  char tTitleID[32];
+  char xboxipAdd[32];
 } struct_message;
 
 // Create a struct_message called myData
@@ -273,10 +283,16 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   Serial.print("IP Address: ");
   Serial.println(myData.xboxipAdd);
   Serial.println();
+   
+ 
+  if (myData.tidSent) { 
+    tidStatus = true;         
+  }
+  if (!tidStatus){
+    lastID = "";
+  }
   
-  
-
-  
+ 
 }
 
 //----------------------------------------------------------------------------------
@@ -284,7 +300,7 @@ void setup() {
   Serial.begin(UART_BAUD_RATE);
   tft.init(ST7735_GREENTAB160x80); // Initialize TFT_eSPI
   tft.setRotation(ST7735_MADCTL_BGR);
-  tft.invertDisplay(1);
+  //tft.invertDisplay(1);
   tft.setRotation(1); // Set display rotation (adjust as needed)
   tft.fillScreen(TFT_BLACK); // Clear the screen with black
   tft.setTextSize(1); // Set default text size
@@ -337,14 +353,15 @@ void setup() {
   // Initialize SD card
   if (!sdStatus) {
     Serial.println("SD Mount Failed");
+    tft.drawBitmap(15, 8, epd_bitmap_question, 128, 64, CoolBlue); // SD Card Image
     tft.setTextSize(1); // Set text size
-    tft.setTextColor(TFT_YELLOW); // Set text color
+    tft.setTextColor(xYellow); // Set text color
     tft.setCursor(20, 5); // Set cursor position
     tft.println("  SD Card Not Found!");
     
-    tft.drawBitmap(15, 8, epd_bitmap_question, 128, 64, CoolBlue); // SD Card Image
     
-    delay(4000); // Wait for 5 seconds
+    
+    delay(5000); // Wait for 5 seconds
     
     
     
@@ -360,7 +377,7 @@ void setup() {
     tft.setTextSize(1);
     tft.setTextColor(TFT_WHITE);
     tft.setCursor(0, 23);
-    tft.println("IP Address Acquired:");
+    tft.println("Xbox IP Address:");
     tft.println(ipAddress);
     
 
@@ -393,31 +410,24 @@ void drawBackground() {
 //----------------------------------------------------------------------------------
 void loop() {
   ArduinoOTA.handle();
-
   delay(100);//allow the cpu to switch to other tasks
-
   
   if (millis() - previousMillis >= interval) {
     previousMillis = millis();
     updateOLED();
   }
-  
-  
-  
-  
+   
   
 }
 
 //----------------------------------------------------------------------------------
 void updateOLED() {
-  
-  if (tidStatus) {
-    if (titleID != "00000000") { // No idea why that get's reported but we ignore it
-      // Display information from SD card
-      displayInfoFromSD(titleID);
-      tidStatus == false;      
-    } 
+  if (tidStatus && titleID != lastID) {
+    displayInfoFromSD(titleID);
+    lastID = titleID; // Update the last displayed title ID
+    tidStatus = false;
   }
+  
   static float lastGpuTemp = -1; // Store the last displayed values
   static float lastCpuTemp = -1;
   static float lastMemTemp = -1;
@@ -453,7 +463,7 @@ void updateOLED() {
     lastCaseTemp = caseTemp;
 
     // Draw the new temperature values
-    tft.setTextColor(TFT_WHITE, TFT_BLACK); // Set text color to white
+    tft.setTextColor(xRed, TFT_BLACK); // Set text color to white
     tft.setCursor(0, 10);
     tft.print("GPU: ");
     tft.print(gpuTemp, 1);
@@ -483,9 +493,9 @@ void updateOLED() {
 void displayInfoFromSD(String targetTitleID) {
 
     // Display information on OLED screen
-  tft.fillScreen(ST7735_BLACK);
+  tft.fillScreen(TFT_BLACK);
   tft.setTextSize(1);
-  tft.setTextColor(ST7735_WHITE);
+  tft.setTextColor(TFT_WHITE);
   tft.setCursor(5, 5);
   tft.println(gameTitle);
   tft.println();
@@ -494,14 +504,8 @@ void displayInfoFromSD(String targetTitleID) {
   tft.println(targetTitleID); // Displays title id in uppercase
   tft.println();
   tft.println("Developer:");
-  tft.println(developer);
-      
+  tft.println(developer);    
 
-  delay(5000); // Display for 10 seconds
-  drawBackground();
-  delay(3000);
-    //updateOLED();
-  
-  
+  delay(8000); // Display for 10 seconds
 
 }
