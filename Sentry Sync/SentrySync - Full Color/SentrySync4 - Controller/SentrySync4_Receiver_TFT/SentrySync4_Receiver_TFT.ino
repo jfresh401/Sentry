@@ -2,7 +2,7 @@
 #include <Wire.h>
 #include <WiFi.h>
 #include <WebServer.h>
-#include <WiFiClient.h> //agregado
+#include <WiFiClient.h> 
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7735.h> 
 #include <SD.h>
@@ -12,41 +12,23 @@
 #include "JFresh_AI_128x64.h" 
 
 //----------------------------------------------------------------------------------
-
+//   Using ESP32 WROOM Dev board
 //----------------------------------------------------------------------------------
 #define TFT_CS   15  // Chip select pin
 #define TFT_RST  4   // Reset pin
 #define TFT_DC   2   // Data/Command pin
 #define TFT_MOSI 21  // MOSI (SPI data)
 #define TFT_SCLK 22  // SCK (SPI clock)
-#define JFRESH_AI_128X64_HEIGHT 80
-#define JFRESH_AI_128X64_WIDTH 160
-
 #define UART_BAUD_RATE 115200
-
 
 TFT_eSPI tft = TFT_eSPI();
 
-const char* ssid = "Smiths";
-const char* password = "capitol401";
+const char* ssid = "YOUR NETWORK NAME";
+const char* password = "YOUR PASSWORD";
 
-
-String consoleData = "";
-bool autoScroll = true;
-
-const int MAX_LINES_WEB = 200; // Maximum number of lines to save for web
-const int MAX_LINES_SCREEN = 8; // Maximum number of lines to display on the screen
-String lines_screen[MAX_LINES_SCREEN]; // Array to store lines of text
-String lines_web[MAX_LINES_WEB];
-int lineCountScreen = 0; // Counter to keep track of the number of lines displayed
-int lineCountWeb = 0;
-bool receivedLines = false;
-
-int scrollSpeed = 0; // Speed of text scrolling, 0 being instant
-
-bool uartMode = false; // Variable to track the current mode
-bool sdStatus = false; // Variable to track the current mode
-bool tidStatus = false; // Variable to track the current mode
+bool uartMode = false; // Variable to track the uart mode
+bool sdStatus = false; // Variable to track if sd card is present
+bool tidStatus = false; // Variable to track if title id was sent via uart
 // Variables to store sensor data
 float gpuTemp = 0.0;
 float cpuTemp = 0.0;
@@ -61,7 +43,7 @@ String lastID = "";
 unsigned long previousMillis = 0;
 const long interval = 2000; // Interval to update OLED display (milliseconds)
 
-//Colors------------------------------------------
+//Colors--------MUST be in BGR format-----------------------------------------
 uint16_t XBGreen = tft.color565(0, 160, 48);  // Xbox green
 uint16_t xYellow = tft.color565(0, 255, 255);  
 uint16_t CoolBlue = tft.color565(124, 89, 24);  // SD card blue
@@ -71,7 +53,6 @@ uint16_t xBlue = tft.color565(255, 0, 0);
 uint16_t xOrange = tft.color565(0, 100, 255);
 uint16_t xPink = tft.color565(255, 0, 255);
 uint16_t xGray = tft.color565(100, 100, 100);
-
 
 // 'sentrysplash', 128x64px
 const unsigned char epd_bitmap_sentrysplash [] PROGMEM = {
@@ -224,7 +205,7 @@ boolean ConectWiFi(void){
     c++;}
   return state;}
 
-// Structure example to receive data
+// Structure to receive data
 // Must match the sender structure
 typedef struct struct_message {
   float gTemp;
@@ -240,7 +221,7 @@ typedef struct struct_message {
   char xboxipAdd[32];
 } struct_message;
 
-// Create a struct_message called myData
+// struct_message called myData
 struct_message myData;
 
 // callback function that will be executed when data is received
@@ -283,16 +264,13 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   Serial.print("IP Address: ");
   Serial.println(myData.xboxipAdd);
   Serial.println();
-   
- 
+    
   if (myData.tidSent) { 
     tidStatus = true;         
   }
   if (!tidStatus){
     lastID = "";
   }
-  
- 
 }
 
 //----------------------------------------------------------------------------------
@@ -300,7 +278,6 @@ void setup() {
   Serial.begin(UART_BAUD_RATE);
   tft.init(ST7735_GREENTAB160x80); // Initialize TFT_eSPI
   tft.setRotation(ST7735_MADCTL_BGR);
-  //tft.invertDisplay(1);
   tft.setRotation(1); // Set display rotation (adjust as needed)
   tft.fillScreen(TFT_BLACK); // Clear the screen with black
   tft.setTextSize(1); // Set default text size
@@ -331,7 +308,7 @@ void setup() {
     Serial.println("initialized ESP-NOW!!");
   }
   
-  // Once ESPNow is successfully Init, we will register for recv CB to
+  // Once ESPNow is successfully Init, register for recv CB to
   // get recv packer info
   esp_now_register_recv_cb(esp_now_recv_cb_t(OnDataRecv));
 
@@ -346,10 +323,7 @@ void setup() {
 
   // Clear the display
   tft.fillScreen(TFT_BLACK);
-
-  // Continue with the rest of the setup
-  
-  
+ 
   // Initialize SD card
   if (!sdStatus) {
     Serial.println("SD Mount Failed");
@@ -358,33 +332,26 @@ void setup() {
     tft.setTextColor(xYellow); // Set text color
     tft.setCursor(20, 5); // Set cursor position
     tft.println("  SD Card Not Found!");
-    
-    
-    
-    delay(5000); // Wait for 5 seconds
-    
-    
-    
+    delay(5000); // Wait for 5 seconds   
   }
   drawBackground();
   delay(6000);
   tft.fillScreen(TFT_BLACK);
   ArduinoOTA.begin();
   Serial.println("OTA started");
+
   if (ipAddress != "0.0.0.0") {
-      // Display IP address on OLED screen
-      
+    // Display IP address on OLED screen      
     tft.setTextSize(1);
     tft.setTextColor(TFT_WHITE);
     tft.setCursor(0, 23);
     tft.println("Xbox IP Address:");
     tft.println(ipAddress);
-    
-
     delay(5000); // Display for 5 seconds
     tft.fillScreen(TFT_BLACK); 
   }
 }
+
 //----------------------------------------------------------------------------------
 void drawBackground() {
   for (int y = 0; y < 80; y++) {
@@ -403,9 +370,6 @@ void drawBackground() {
     }
   }
 }
-//----------------------------------------------------------------------------------
-
-//----------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------
 void loop() {
@@ -415,9 +379,7 @@ void loop() {
   if (millis() - previousMillis >= interval) {
     previousMillis = millis();
     updateOLED();
-  }
-   
-  
+  }  
 }
 
 //----------------------------------------------------------------------------------
@@ -463,7 +425,7 @@ void updateOLED() {
     lastCaseTemp = caseTemp;
 
     // Draw the new temperature values
-    tft.setTextColor(xRed, TFT_BLACK); // Set text color to white
+    tft.setTextColor(xRed); // Set text color to white
     tft.setCursor(0, 10);
     tft.print("GPU: ");
     tft.print(gpuTemp, 1);
@@ -481,18 +443,13 @@ void updateOLED() {
     tft.print(caseTemp, 1);
     tft.print("C");
     tft.println();
-  }
-  
+  } 
 }
-
-//----------------------------------------------------------------------------------
-
-
 
 //----------------------------------------------------------------------------------
 void displayInfoFromSD(String targetTitleID) {
 
-    // Display information on OLED screen
+  // Display information on OLED screen
   tft.fillScreen(TFT_BLACK);
   tft.setTextSize(1);
   tft.setTextColor(TFT_WHITE);
@@ -505,7 +462,6 @@ void displayInfoFromSD(String targetTitleID) {
   tft.println();
   tft.println("Developer:");
   tft.println(developer);    
-
   delay(8000); // Display for 10 seconds
-
+  drawBackground();
 }
