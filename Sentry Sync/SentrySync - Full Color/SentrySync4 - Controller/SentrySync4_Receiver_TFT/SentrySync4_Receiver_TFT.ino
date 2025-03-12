@@ -23,8 +23,8 @@
 
 TFT_eSPI tft = TFT_eSPI();
 
-const char* ssid = "YOUR NETWORK NAME";
-const char* password = "YOUR PASSWORD";
+const char* ssid = "NETWORK NAME";
+const char* password = "PASSWORD";
 
 bool uartMode = false; // Variable to track the uart mode
 bool sdStatus = false; // Variable to track if sd card is present
@@ -332,23 +332,27 @@ void setup() {
     tft.setTextColor(xYellow); // Set text color
     tft.setCursor(20, 5); // Set cursor position
     tft.println("  SD Card Not Found!");
-    delay(5000); // Wait for 5 seconds   
+    delay(5000); // Wait for 5 seconds
+    drawBackground();   
   }
-  drawBackground();
-  delay(6000);
-  tft.fillScreen(TFT_BLACK);
+  
+  
   ArduinoOTA.begin();
   Serial.println("OTA started");
 
   if (ipAddress != "0.0.0.0") {
     // Display IP address on OLED screen      
     tft.setTextSize(1);
-    tft.setTextColor(TFT_WHITE);
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.setCursor(0, 23);
     tft.println("Xbox IP Address:");
     tft.println(ipAddress);
     delay(5000); // Display for 5 seconds
-    tft.fillScreen(TFT_BLACK); 
+    drawBackground(); 
+  }
+  else{
+    delay(5000);
+    drawBackground();
   }
 }
 
