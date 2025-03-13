@@ -1,3 +1,5 @@
+ADDED 3/13/2025: Both TFT and OLED setups for wireless SentrySync. 
+
 ADDED 3/9/2025: SentrySync can now be remote and wireless running even on batteries!
 
 ADDED 3/6/2025: SentrySync is now in Full Color! New files and diagram added.
