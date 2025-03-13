@@ -50,4 +50,4 @@ I eventually lost interest and shelved the project, but this should make for a g
 
 # SentrySync - Full Color
 
-<img src="Sentry Sync/SentrySync - Full Color/Sentry_Full_Color.jpg" alt="SentrySync - Full Color Wiring Diagram" width="1000">
+<img src="Sentry Sync/SentrySync4 - Controller/SentrySync_Controller.jpg" alt="SentrySync - Full Color Wiring Diagram" width="1000">
