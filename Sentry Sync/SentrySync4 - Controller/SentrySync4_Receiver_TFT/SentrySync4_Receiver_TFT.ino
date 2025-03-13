@@ -23,8 +23,8 @@
 
 TFT_eSPI tft = TFT_eSPI();
 
-const char* ssid = "Smiths";
-const char* password = "capitol401";
+const char* ssid = "NETWORK";
+const char* password = "PASSWORD";
 
 bool uartMode = false; // Variable to track the uart mode
 bool sdStatus = false; // Variable to track if sd card is present
