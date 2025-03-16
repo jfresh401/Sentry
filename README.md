@@ -1,9 +1,8 @@
+ADDED 3/16/2025: SentrySync4 files. Functionality for 2 seperate screens added. Sorted things a little. 
+
 ADDED 3/13/2025: Both TFT and OLED setups for wireless SentrySync. 
-
 ADDED 3/9/2025: SentrySync can now be remote and wireless running even on batteries!
-
 ADDED 3/6/2025: SentrySync is now in Full Color! New files and diagram added.
-
 ADDED 2/24/2025: SentrySync2.ino and SentrySync3.ino work with wifi. 
 SentrySync3.ino adds Over-The-Air update capabilities for uploading a sketch to ESP32 wirelessly.
 Updated diagram.
