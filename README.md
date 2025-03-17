@@ -51,3 +51,6 @@ I eventually lost interest and shelved the project, but this should make for a g
 # SentrySync - Full Color
 
 <img src="Sentry Sync/SentrySync3/SentrySync3_TFT/Sentry_Full_Color.jpg" alt="SentrySync - Full Color Wiring Diagram" width="1000">
+
+# SentrySync - Remote
+<img src="Sentry Sync/SentrySync4/SentrySync4 - Remote/SentrySync_Controller.jpg" alt="SentrySync - Remote Wiring Diagram" width="1000">
