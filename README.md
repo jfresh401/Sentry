@@ -3,18 +3,19 @@ ADDED 3/16/2025: SentrySync4 files. Functionality for 2 seperate screens added. 
 ADDED 3/13/2025: Both TFT and OLED setups for wireless SentrySync. 
 ADDED 3/9/2025: SentrySync can now be remote and wireless running even on batteries!
 ADDED 3/6/2025: SentrySync is now in Full Color! New files and diagram added.
-ADDED 2/24/2025: SentrySync2.ino and SentrySync3.ino work with wifi. 
-SentrySync3.ino adds Over-The-Air update capabilities for uploading a sketch to ESP32 wirelessly.
-Updated diagram.
-Thanks to ViolentLambs and Charly Gaber for helping out with this. Check out Charly's Fiver account. He does great work! 
+ADDED 2/24/2025: SentrySync2.ino and SentrySync3.ino work with wifi. SentrySync3.ino adds Over-The-Air update capabilities for uploading a sketch to ESP32 wirelessly. Updated diagram. Thanks to ViolentLambs and Charly Gaber for helping out with this. Check out Charly's Fiver account. He does great work! 
 <a href="https://www.fiverr.com/s/1qQEpKK">
   <img src="https://mms.businesswire.com/media/20190711005205/en/732296/5/FIV_Logo_Green-Circle.jpg?download=1&_gl=1*xlfouw*_gcl_au*NDY3MTMzMDY4LjE3NDA0MDgxNzM.*_ga*MjA3NTI1NzA3OS4xNzQwNDA4MTcz*_ga_ZQWF70T3FK*MTc0MDQwODE3Mi4xLjAuMTc0MDQwODE3My41OS4wLjA." alt="Charly's Fiver Profile" width="200">
 </a>
 
-
+# NOTES
+- **SentrySync1.ino:** Original by Element. All functions do not work correctly for some reason.
+- **SentrySync2.ino:** Edited by ViolentLamb and Charly Gaber. All functions work as intended in original.
+- **SentrySync3.ino:** Edited by JFresh. This is for 0.96inch OLED and 0.96inch TFT .ino files. You'll also need to use the "Libraries" folder to find arduino library files required. Drag and drop to replace these files in your arduino IDE files. This version also includes OTA update capabilites for the ESP. NO WIRES NEEDED TO UPDATE THE ESP CODE.
+- **SentrySync4.ino:** Edited by JFresh. This is the remote version of the above, plus added a larger screen size alternative. Same libraries as above need to be used. There are a few versions. Console only screen, Controller/remote only screen, and both console and controller screens. See files/folders for details.
 
 # Sentry
-Sentry is a project I started as a fun experiment to bring a status screen to the Xbox 360, inspired by the old LCD mods for the original Xbox. Currently, the project is unfinished however, it does have a handful of features in its current state, including:  
+Sentry is a project I (Element) started as a fun experiment to bring a status screen to the Xbox 360, inspired by the old LCD mods for the original Xbox. Currently, the project is unfinished however, it does have a handful of features in its current state, including:  
 
 - **Temperature Monitoring**: Actively updates and displays the consoles current temperature readings.
 - **Network Information**: Displays the console's IP address when connected via Wi-Fi or LAN. 
