@@ -1,3 +1,0 @@
-To flash ESP32-C3, you must install esp boards file version 2.0.14 then revert back to esp boards file version 3.2.0 when flashing ESP32 Dev board.
-Copy the "libraries" folder into where your arduino libraries are installed. TFT_eSPI library must be installed FIRST, then overwrite with my files.
-Don't forget to edit the User_Setup.h to fit your screen/ESP setup.
