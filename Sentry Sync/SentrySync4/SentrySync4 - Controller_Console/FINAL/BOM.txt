@@ -1,0 +1,6 @@
+(1) ESP32-c3 Super Mini
+(1) ESP32 WROOM Dev Board
+(1) Receiver TFT screen -  0.96inch 80x160(RGB)   ST7735
+(1) Sender TFT screen - 2.0inch 240x320(RGB)  ST7789
+(1) Arduino compatible micro sd card reader
+(1) Micro SD Card (at least 4gb and formatted to FAT32)
