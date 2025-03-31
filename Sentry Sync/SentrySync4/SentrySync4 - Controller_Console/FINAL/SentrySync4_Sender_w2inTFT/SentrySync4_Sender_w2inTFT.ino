@@ -46,8 +46,8 @@ esp_now_peer_info_t peerInfo;
 
 #define UART_BAUD_RATE 115200
 
-const char* ssid = "Smiths";
-const char* password = "capitol401";
+const char* ssid = "NETWORK NAME";
+const char* password = "PASSWORD";
 
 WebServer server(80);
 
