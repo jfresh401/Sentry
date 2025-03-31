@@ -1,5 +1,6 @@
-ADDED 3/16/2025: SentrySync4 files. Functionality for 2 seperate screens added. Sorted things a little. 
+ADDED 3/31/2025: Updated SentrySync4 files to include ESP32-C3 setup for small form factor. ALSO, PAY ATTENTION TO NOTES ABOUT FLASHING ESP32C3 and ESP32 Dev Board.
 
+ADDED 3/16/2025: SentrySync4 files. Functionality for 2 seperate screens added. Sorted things a little. 
 ADDED 3/13/2025: Both TFT and OLED setups for wireless SentrySync. 
 ADDED 3/9/2025: SentrySync can now be remote and wireless running even on batteries!
 ADDED 3/6/2025: SentrySync is now in Full Color! New files and diagram added.
