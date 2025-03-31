@@ -30,8 +30,8 @@ IPAddress Built_Mask(255, 255, 255, 0);
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
 
-const char* ssid = "Smiths";
-const char* password = "capitol401";
+const char* ssid = "NETWORK NAME";
+const char* password = "PASSWORD";
 
 WebServer server(80);
 
